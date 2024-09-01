@@ -51,11 +51,52 @@ const eventLog = document.getElementById('event-log');
 const disclaimerModal = document.getElementById('disclaimer-modal');
 const acceptDisclaimerButton = document.getElementById('accept-disclaimer');
 
+// Auto-Save Function
+function saveGame() {
+    const gameState = {
+        totalResources,
+        productionRate,
+        upgradeLevel,
+        upgradeCost,
+        totalMinerals,
+        totalISK,
+        maxStorage,
+        selectedShip: shipSelect.value
+    };
+    localStorage.setItem('gameState', JSON.stringify(gameState));
+}
+
+// Auto-Load Function
+function loadGame() {
+    const savedGameState = JSON.parse(localStorage.getItem('gameState'));
+    if (savedGameState) {
+        totalResources = savedGameState.totalResources;
+        productionRate = savedGameState.productionRate;
+        upgradeLevel = savedGameState.upgradeLevel;
+        upgradeCost = savedGameState.upgradeCost;
+        totalMinerals = savedGameState.totalMinerals;
+        totalISK = savedGameState.totalISK;
+        maxStorage = savedGameState.maxStorage;
+        selectedShip = ships[savedGameState.selectedShip];
+
+        // Update UI with loaded values
+        totalResourcesElement.innerText = totalResources;
+        productionRateElement.innerText = productionRate;
+        upgradeLevelElement.innerText = upgradeLevel;
+        upgradeCostElement.innerText = upgradeCost;
+        totalMineralsElement.innerText = totalMinerals;
+        totalISKElement.innerText = totalISK;
+        maxStorageElement.innerText = maxStorage;
+        shipSelect.value = savedGameState.selectedShip;
+    }
+}
+
 // Function to Update Resource Count
 function updateResources() {
     totalResources += productionRate;
     totalResourcesElement.innerText = totalResources;
     log(`Produced ${productionRate} resources. Total: ${totalResources}`);
+    saveGame(); // Save game state after updating resources
 }
 
 // Function to Log Messages in the Game
@@ -82,6 +123,7 @@ function upgradeFacility() {
         maxStorageElement.innerText = maxStorage;
 
         log(`Upgraded to level ${upgradeLevel}. New production rate: ${productionRate} per second. Storage increased to ${maxStorage}.`);
+        saveGame(); // Save game state after upgrading
     } else {
         log(`Not enough resources to upgrade! Need ${upgradeCost - totalResources} more.`);
     }
@@ -101,6 +143,7 @@ function mineAsteroid(asteroidType) {
             totalMineralsElement.innerText = totalMinerals;
             totalISKElement.innerText = totalISK;
             log(`Mined ${mineralAmount} units of ${asteroidType}. Earned ${mineralAmount * mineralPrices[asteroidType]} ISK.`);
+            saveGame(); // Save game state after mining
         } else {
             log("Storage is full! Upgrade storage or sell minerals.");
         }
@@ -111,6 +154,7 @@ function mineAsteroid(asteroidType) {
 shipSelect.addEventListener('change', (event) => {
     selectedShip = ships[event.target.value];
     log(`Selected ${event.target.options[event.target.selectedIndex].text}`);
+    saveGame(); // Save game state after selecting a ship
 });
 
 // Event Listener for Upgrade Button
@@ -180,3 +224,6 @@ acceptDisclaimerButton.addEventListener('click', acceptDisclaimer);
 
 // Show disclaimer on page load
 showDisclaimer();
+
+// Load saved game state on page load
+window.onload = loadGame;
