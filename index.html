@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planetary Tycoon</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Disclaimer Modal -->
+    <div id="disclaimer-modal" class="modal">
+        <div class="modal-content">
+            <h2>Disclaimer & Warning</h2>
+            <p>
+                This game, "Planetary Tycoon," is a fan-made project inspired by the game mechanics and universe of the popular space simulation game *EVE Online* by CCP Games. This game is not affiliated with, endorsed by, or in any way officially connected with CCP Games, its subsidiaries, or its affiliates. All trademarks, service marks, and company names are the property of their respective owners.
+            </p>
+            <p>
+                This game is created solely for entertainment purposes and is intended for private, non-commercial use only. All content and features are original creations of the developers and are not intended to replicate or infringe upon the intellectual property rights of CCP Games. Any resemblance to actual features, mechanics, or elements from *EVE Online* is purely coincidental or for parody purposes.
+            </p>
+            <p>
+                By proceeding, you acknowledge that you understand this disclaimer and agree to not hold the developers of "Planetary Tycoon" liable for any claims or damages related to the content or gameplay of this fan-made project. If you are associated with CCP Games or have concerns about potential copyright infringement, please contact the developers directly for resolution.
+            </p>
+            <button id="accept-disclaimer">I Understand and Accept</button>
+        </div>
+    </div>
+
+    <div id="game-container">
+        <h1>Planetary Tycoon</h1>
+        <h2>Mining and Production Game</h2>
+
+        <!-- Mining Ships Section -->
+        <div id="ship-container">
+            <h2>Select Mining Ship</h2>
+            <select id="ship-select">
+                <option value="basic">Basic Mining Ship (Yield x1, Time 100%)</option>
+                <option value="advanced">Advanced Mining Ship (Yield x2, Time 75%)</option>
+                <option value="elite">Elite Mining Ship (Yield x3, Time 50%)</option>
+            </select>
+        </div>
+
+        <!-- Mining Section -->
+        <div id="mining-container">
+            <h2>Asteroid Belts</h2>
+            <div id="asteroid-belt">
+                <!-- Mining Buttons for Each Asteroid -->
+                <button class="mine-btn" data-asteroid="Veldspar">Mine Veldspar Belt</button>
+                <button class="mine-btn" data-asteroid="Scordite">Mine Scordite Belt</button>
+                <button class="mine-btn" data-asteroid="Pyroxeres">Mine Pyroxeres Belt</button>
+                <button class="mine-btn" data-asteroid="Plagioclase">Mine Plagioclase Belt</button>
+                <button class="mine-btn" data-asteroid="Omber">Mine Omber Belt</button>
+                <button class="mine-btn" data-asteroid="Kernite">Mine Kernite Belt</button>
+                <button class="mine-btn" data-asteroid="Jaspet">Mine Jaspet Belt</button>
+                <button class="mine-btn" data-asteroid="Hemorphite">Mine Hemorphite Belt</button>
+                <button class="mine-btn" data-asteroid="Hedbergite">Mine Hedbergite Belt</button>
+                <button class="mine-btn" data-asteroid="Gneiss">Mine Gneiss Belt</button>
+                <button class="mine-btn" data-asteroid="Dark Ochre">Mine Dark Ochre Belt</button>
+                <button class="mine-btn" data-asteroid="Crokite">Mine Crokite Belt</button>
+                <button class="mine-btn" data-asteroid="Bistot">Mine Bistot Belt</button>
+                <button class="mine-btn" data-asteroid="Arkonor">Mine Arkonor Belt</button>
+                <button class="mine-btn" data-asteroid="Spodumain">Mine Spodumain Belt</button>
+                <button class="mine-btn" data-asteroid="Mercoxit">Mine Mercoxit Belt</button>
+            </div>
+            <p>Total Minerals: <span id="total-minerals">0</span> / <span id="max-storage">100</span></p>
+            <p>Interstellar Kredits (ISK): <span id="total-isk">0</span></p>
+        </div>
+
+        <!-- Production Section -->
+        <div id="planet-container">
+            <h2>Planet: Earth</h2>
+            <p>Resource: Metals</p>
+            <p>Production Rate: <span id="production-rate">1</span> per second</p>
+            <p>Total Resources: <span id="total-resources">0</span></p>
+            <button id="upgrade-btn">Upgrade Facility (Cost: <span id="upgrade-cost">10</span>)</button>
+            <p>Upgrade Level: <span id="upgrade-level">1</span></p>
+        </div>
+
+        <!-- Events Section -->
+        <div id="event-container">
+            <h3>Asteroid Events</h3>
+            <p id="event-log">No current events.</p>
+        </div>
+
+        <!-- Log Section -->
+        <div id="log-container">
+            <h3>Game Log</h3>
+            <div id="log"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
