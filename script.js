@@ -1,4 +1,4 @@
-// Initial Game Variables
+// Initial Game Variables with Default Values
 let totalResources = 0;
 let productionRate = 1;
 let upgradeLevel = 1;
@@ -70,25 +70,33 @@ function saveGame() {
 function loadGame() {
     const savedGameState = JSON.parse(localStorage.getItem('gameState'));
     if (savedGameState) {
-        totalResources = savedGameState.totalResources;
-        productionRate = savedGameState.productionRate;
-        upgradeLevel = savedGameState.upgradeLevel;
-        upgradeCost = savedGameState.upgradeCost;
-        totalMinerals = savedGameState.totalMinerals;
-        totalISK = savedGameState.totalISK;
-        maxStorage = savedGameState.maxStorage;
-        selectedShip = ships[savedGameState.selectedShip];
+        totalResources = savedGameState.totalResources || 0;
+        productionRate = savedGameState.productionRate || 1;
+        upgradeLevel = savedGameState.upgradeLevel || 1;
+        upgradeCost = savedGameState.upgradeCost || 10;
+        totalMinerals = savedGameState.totalMinerals || 0;
+        totalISK = savedGameState.totalISK || 0;
+        maxStorage = savedGameState.maxStorage || 100;
+        selectedShip = ships[savedGameState.selectedShip] || ships.basic;
 
         // Update UI with loaded values
-        totalResourcesElement.innerText = totalResources;
-        productionRateElement.innerText = productionRate;
-        upgradeLevelElement.innerText = upgradeLevel;
-        upgradeCostElement.innerText = upgradeCost;
-        totalMineralsElement.innerText = totalMinerals;
-        totalISKElement.innerText = totalISK;
-        maxStorageElement.innerText = maxStorage;
-        shipSelect.value = savedGameState.selectedShip;
+        updateUI();
+    } else {
+        // Initialize with default values
+        updateUI();
     }
+}
+
+// Function to Update UI Elements
+function updateUI() {
+    totalResourcesElement.innerText = totalResources;
+    productionRateElement.innerText = productionRate;
+    upgradeLevelElement.innerText = upgradeLevel;
+    upgradeCostElement.innerText = upgradeCost;
+    totalMineralsElement.innerText = totalMinerals;
+    totalISKElement.innerText = totalISK;
+    maxStorageElement.innerText = maxStorage;
+    shipSelect.value = Object.keys(ships).find(key => ships[key] === selectedShip);
 }
 
 // Function to Update Resource Count
@@ -116,12 +124,7 @@ function upgradeFacility() {
         upgradeCost = Math.floor(upgradeCost * 1.5);
         maxStorage += 50; // Increase storage with each upgrade
 
-        totalResourcesElement.innerText = totalResources;
-        upgradeLevelElement.innerText = upgradeLevel;
-        productionRateElement.innerText = productionRate;
-        upgradeCostElement.innerText = upgradeCost;
-        maxStorageElement.innerText = maxStorage;
-
+        updateUI(); // Update UI after changes
         log(`Upgraded to level ${upgradeLevel}. New production rate: ${productionRate} per second. Storage increased to ${maxStorage}.`);
         saveGame(); // Save game state after upgrading
     } else {
@@ -140,8 +143,7 @@ function mineAsteroid(asteroidType) {
         if (totalMinerals + mineralAmount <= maxStorage) {
             totalMinerals += mineralAmount;
             totalISK += mineralAmount * mineralPrices[asteroidType];
-            totalMineralsElement.innerText = totalMinerals;
-            totalISKElement.innerText = totalISK;
+            updateUI(); // Update UI after mining
             log(`Mined ${mineralAmount} units of ${asteroidType}. Earned ${mineralAmount * mineralPrices[asteroidType]} ISK.`);
             saveGame(); // Save game state after mining
         } else {
