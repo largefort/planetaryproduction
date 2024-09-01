@@ -7,6 +7,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 0;
 }
 
 #game-container {
@@ -14,14 +15,15 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-    width: 400px;
+    width: 90%;
+    max-width: 400px;
     max-height: 90vh;
     overflow-y: auto;
 }
 
 h1, h2, h3 {
     text-align: center;
-    margin: 0 0 10px 0;
+    margin: 10px 0;
 }
 
 #planet-container, #mining-container, #ship-container, #event-container {
@@ -37,6 +39,7 @@ button {
     cursor: pointer;
     width: 100%;
     margin-top: 10px;
+    font-size: 1em;
 }
 
 button:hover {
@@ -60,6 +63,7 @@ button:hover {
 #asteroid-belt button {
     width: 100%;
     margin: 5px 0;
+    font-size: 0.9em;
 }
 
 select {
@@ -100,11 +104,38 @@ select:hover {
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 50%;
+    width: 90%;
+    max-width: 400px;
     border-radius: 10px;
     text-align: center;
 }
 
 .modal-content button {
     margin-top: 20px;
+}
+
+/* Responsive Styles */
+@media (max-width: 600px) {
+    #game-container {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px;
+        font-size: 0.9em;
+    }
+
+    #log-container {
+        height: 120px;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+    }
+
+    select {
+        padding: 8px;
+        font-size: 0.9em;
+    }
 }
